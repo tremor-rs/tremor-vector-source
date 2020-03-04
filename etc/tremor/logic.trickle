@@ -1,0 +1,21 @@
+select
+  match event of
+    case r=%{ message ~= json||} => 
+      match r.message of
+        case %{ present application, present date, present message } =>
+          { "ok": merge event of 
+                   { "elapsed_ms": 
+                     math::trunc((system::ingest_ns() - r.message.date) / 1000000) }
+                  end
+          }
+        default => { "error": "invalid", "got": event }
+      end
+    default => { "error": "malformed", "got": event }
+  end
+from in into validate;
+
+create stream validate;
+create stream not_ok;
+
+select event from validate where present event.ok into out/ok;
+select event from validate where absent event.ok into out/not_ok;

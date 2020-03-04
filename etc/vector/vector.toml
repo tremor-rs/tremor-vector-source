@@ -1,0 +1,18 @@
+# Use a file based data source
+[sources.in]
+  type = "file"
+  include = [ "input.log" ] 
+
+[sources.in.fingerprinting]
+  fingerprint_bytes = 1
+  strategy = "checksum"
+  ignored_header_bytes = 0
+
+# Push source data through a tcp socket from vector to tremor
+[sinks.tcp]
+  type = "socket"
+  inputs = ["in"]
+  address = "127.0.0.1:8888"
+  mode = "tcp"
+  encoding = "json"
+

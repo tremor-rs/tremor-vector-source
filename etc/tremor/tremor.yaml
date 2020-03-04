@@ -1,0 +1,33 @@
+onramp:
+  - id: vector
+    type: tcp
+    preprocessors:
+      - lines
+    codec: json
+    config:
+      host: 127.0.0.1
+      port: 8888
+
+
+offramp:
+  - id: ok
+    type: stdout
+    codec: json
+    config:
+      prefix: "Valid> "
+  - id: not_ok
+    type: stdout
+    codec: json
+    config:
+      prefix: "Invalid> "
+
+binding:
+  - id: main
+    links:
+      '/onramp/vector/{instance}/out': [ '/pipeline/logic/{instance}/in' ]
+      '/pipeline/logic/{instance}/ok': [ '/offramp/ok/{instance}/in' ]
+      '/pipeline/logic/{instance}/not_ok': [ '/offramp/not_ok/{instance}/in' ]
+
+mapping:
+  /binding/main/01:
+    instance: "01"
