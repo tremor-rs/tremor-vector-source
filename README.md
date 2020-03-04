@@ -11,7 +11,7 @@ transformation and distribution.
 
 Tremor is more focused on near real-time stream based sources and sinks.
 
-By setting an integrated tremor and vector sidecar integrated over TCP sockets
+By setting up a combined tremor and vector sidecar integrated over TCP sockets
 we can leverage vector data sources and tremor's scripting and query languages.
 
 ## Setup
@@ -148,7 +148,7 @@ Listening at: http://0.0.0.0:9898
 
 No effort was made in this integration solution to tune vector or tremor.
 
-For further information on [vector](https::/vector.dev/) and [tremor](https://tremor.rs)
+For further information on [vector](https://vector.dev/) and [tremor](https://tremor.rs)
 consult their respective web sites, documentation and references.
 
 ## Glossary
